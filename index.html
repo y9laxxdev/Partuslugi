@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Партусулги</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header class="header">
+  <div class="header-left">
+    <img src="https://i.ibb.co/ccv77Bmm/P-Bank-Icon.jpg" alt="P-Bank Icon" class="icon" />
+    Партусулги
+  </div>
+  <button class="header-button" id="openModalBtn">Нажми</button>
+</header>
+
+<main>
+  <section class="news-box">
+    <h2>Новости</h2>
+    <p>Добро пожаловать в свежие новости нашего банка! Здесь вы найдете самые важные события и обновления.</p>
+  </section>
+  <section class="news-box">
+    <h2>Крипта</h2>
+    <p>Следите за новостями криптовалютного рынка вместе с нами. Мы расскажем о последних трендах, изменениях курсов и важных событиях.</p>
+  </section>
+  <section class="news-box">
+    <h2>О нас</h2>
+    <p>Мы — команда профессионалов, которая работает для вашего финансового благополучия. Узнайте больше о нашей истории и целях.</p>
+  </section>
+</main>
+
+<div class="text-box" id="rub-box">
+  <input 
+    type="text" 
+    class="digit-input" 
+    id="rub-input" 
+    maxlength="15" 
+    pattern="[\d,]*" 
+    title="Цифры и запятые" 
+    placeholder="Введите сумму в RUB" 
+    value="1"
+  />
+  <div class="side-rectangle">RUB</div>
+</div>
+
+<div class="text-box" id="ppc-box">
+  <input 
+    type="text" 
+    class="digit-input" 
+    id="ppc-input" 
+    maxlength="15" 
+    pattern="[\d,]*" 
+    title="Цифры и запятые" 
+    placeholder="Количество PCoin" 
+    value="2,54"
+  />
+  <div class="side-rectangle">PCoin</div>
+</div>
+
+<!-- Модальное окно -->
+<div class="modal" id="myModal">
+  <div class="modal-content">
+    <h2>Это модальное окно</h2>
+    <p>Здесь может быть ваша реклама или важная информация.</p>
+    <button class="close-btn" id="closeModalBtn">Закрыть</button>
+  </div>
+</div>
+
+<script>
+  const rubInput = document.getElementById('rub-input');
+  const ppcInput = document.getElementById('ppc-input');
+
+  const PRICE_RUB_TO_PCOIN = 2.54;
+
+  function parseNumber(str) {
+    if (!str) return 0;
+    const sanitized = str.replace(',', '.').replace(/[^\d.]/g, '');
+    const num = parseFloat(sanitized);
+    return isNaN(num) ? 0 : num;
+  }
+
+  function updatePcoinFromRub() {
+    const rubVal = parseNumber(rubInput.value);
+    const pcoinVal = rubVal * PRICE_RUB_TO_PCOIN;
+    ppcInput.value = pcoinVal.toFixed(2).replace('.', ',');
+  }
+
+  function updateRubFromPcoin() {
+    const pcoinVal = parseNumber(ppcInput.value);
+    const rubVal = pcoinVal / PRICE_RUB_TO_PCOIN;
+    rubInput.value = rubVal.toFixed(2).replace('.', ',');
+  }
+
+  rubInput.addEventListener('input', () => {
+    rubInput.value = rubInput.value.replace(/[^\d,]/g, '');
+    updatePcoinFromRub();
+  });
+
+  ppcInput.addEventListener('input', () => {
+    ppcInput.value = ppcInput.value.replace(/[^\d,]/g, '');
+    updateRubFromPcoin();
+  });
+
+  window.addEventListener('load', () => {
+    updatePcoinFromRub();
+  });
+
+  // Работа с модальным окном
+  const modal = document.getElementById('myModal');
+  const openModalBtn = document.getElementById('openModalBtn');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+
+  openModalBtn.addEventListener('click', () => {
+    modal.classList.add('show');
+  });
+
+  closeModalBtn.addEventListener('click', () => {
+    modal.classList.remove('show');
+  });
+
+  // Закрытие модального окна по клику вне окна
+  window.addEventListener('click', (e) => {
+    if(e.target === modal) {
+      modal.classList.remove('show');
+    }
+  });
+</script>
+
+</body>
+</html>
