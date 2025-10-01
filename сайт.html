@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Партусулги</title>
+<style>
+  :root {
+    --gap-between-header-and-box: 16px;
+    --side-padding: 20px;
+    --button-size: 40px; /* Размер кнопки */
+  }
+  
+  html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #6264ed;
+    font-family: Arial, sans-serif;
+  }
+
+  /* Хедер */
+  .header {
+    width: 100vw;
+    background-color: #ffffff;
+    color: #000;
+    font-weight: bold;
+    font-size: 24px;
+    height: 75px;
+    padding: 0 16px;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    gap: 8px;
+    z-index: 1000;
+    border-bottom: 2px solid black;
+    border-radius: 0 0 12px 12px;
+  }
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .icon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    border-radius: 8px;
+    border: 2px solid black;
+  }
+  .header-button {
+    width: var(--button-size);
+    height: var(--button-size);
+    background: #fff;
+    border: 2px solid black;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    padding: 0;
+    outline: none;
+  }
+  .header-button:hover {
+    background-color: #f0f0f0;
+  }
+
+  body {
+    padding-top: 150px;
+  }
+
+  main {
+    padding: calc(var(--gap-between-header-and-box) + 16px) var(--side-padding) 16px var(--side-padding);
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .news-box {
+    background-color: white;
+    color: black;
+    border: 2px solid black;
+    border-radius: 12px;
+    padding: 24px;
+    font-size: 1.5rem;
+    max-width: 380px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .text-box {
+    position: relative; 
+    background: white;
+    color: black;
+    border: 2px solid black;
+    border-radius: 12px;
+    padding: 10px 80px 10px 24px;
+    max-width: 800px;
+    width: 100%;
+    margin: 20px auto 0 auto;
+    height: 75px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+  }
+  .digit-input {
+    font-size: 1.2rem;
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 100%;
+    text-align: left;
+  }
+  .side-rectangle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    min-width: 80px;
+    height: 50px;
+    background-color: rgba(98, 100, 237, 0.5);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    padding: 0 8px;
+    pointer-events: none;
+  }
+
+  /* --- Модальное окно --- */
+  /* Окно */
+  .modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 2000;
+  }
+
+  /* Когда активировано, делаем прозрачность 1 и разрешаем взаимодействие */
+  .modal.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* содержимое модального окна */
+  .modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 500px;
+    width: 80%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    animation: fadeIn 0.3s;
+  }
+
+  /* анимация появления */
+  @keyframes fadeIn {
+    from {transform: translateY(-20px); opacity: 0;}
+    to {transform: translateY(0); opacity: 1;}
+  }
+
+  /* Кнопка закрытия */
+  .close-btn {
+    margin-top: 20px;
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #6264ed;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  .close-btn:hover {
+    background-color: #5352d4;
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-left">
+    <img src="https://i.ibb.co/ccv77Bmm/P-Bank-Icon.jpg" alt="P-Bank Icon" class="icon" />
+    Партусулги
+  </div>
+  <!-- Внутри кнопки можно размещать любой текст или иконки -->
+  <button class="header-button" id="openModalBtn">☰</button>
+</header>
+
+<main>
+  <section class="news-box">
+    <h2>Новости</h2>
+    <p>шаблон</p>
+  </section>
+  <section class="news-box">
+    <h2>Крипта</h2>
+    <p>шаблон</p>
+  </section>
+  <section class="news-box">
+    <h2>О нас</h2>
+    <p>тоже шаблон😔</p>
+  </section>
+</main>
+
+<div class="text-box" id="rub-box">
+  <input 
+    type="text" 
+    class="digit-input" 
+    id="rub-input" 
+    maxlength="15" 
+    pattern="[\d,]*" 
+    title="Цифры и запятые" 
+    placeholder="Введите сумму в RUB" 
+    value="1"
+  />
+  <div class="side-rectangle">RUB</div>
+</div>
+
+<div class="text-box" id="ppc-box">
+  <input 
+    type="text" 
+    class="digit-input" 
+    id="ppc-input" 
+    maxlength="15" 
+    pattern="[\d,]*" 
+    title="Цифры и запятые" 
+    placeholder="Количество PCoin" 
+    value="2,54"
+  />
+  <div class="side-rectangle">PCoin</div>
+</div>
+
+<!-- Модальное окно -->
+<div class="modal" id="myModal">
+  <div class="modal-content">
+    <h2>Это шаблон</h2>
+    <p>Пока что, просто шаблон, но скоро здесь будет что то будет...</p>
+    <button class="close-btn" id="closeModalBtn">Закрыть</button>
+  </div>
+</div>
+
+<script>
+  const rubInput = document.getElementById('rub-input');
+  const ppcInput = document.getElementById('ppc-input');
+
+  const PRICE_RUB_TO_PCOIN = 2.54;
+
+  function parseNumber(str) {
+    if (!str) return 0;
+    const sanitized = str.replace(',', '.').replace(/[^\d.]/g, '');
+    const num = parseFloat(sanitized);
+    return isNaN(num) ? 0 : num;
+  }
+
+  function updatePcoinFromRub() {
+    const rubVal = parseNumber(rubInput.value);
+    const pcoinVal = rubVal * PRICE_RUB_TO_PCOIN;
+    ppcInput.value = pcoinVal.toFixed(2).replace('.', ',');
+  }
+
+  function updateRubFromPcoin() {
+    const pcoinVal = parseNumber(ppcInput.value);
+    const rubVal = pcoinVal / PRICE_RUB_TO_PCOIN;
+    rubInput.value = rubVal.toFixed(2).replace('.', ',');
+  }
+
+  rubInput.addEventListener('input', () => {
+    rubInput.value = rubInput.value.replace(/[^\d,]/g, '');
+    updatePcoinFromRub();
+  });
+
+  ppcInput.addEventListener('input', () => {
+    ppcInput.value = ppcInput.value.replace(/[^\d,]/g, '');
+    updateRubFromPcoin();
+  });
+
+  window.addEventListener('load', () => {
+    updatePcoinFromRub();
+  });
+
+  // Работа с модальным окном
+  const modal = document.getElementById('myModal');
+  const openModalBtn = document.getElementById('openModalBtn');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+
+  openModalBtn.addEventListener('click', () => {
+    modal.classList.add('show');
+  });
+
+  closeModalBtn.addEventListener('click', () => {
+    modal.classList.remove('show');
+  });
+
+  // Можно закрывать модальное окно по клику вне окна
+  window.addEventListener('click', (e) => {
+    if(e.target === modal) {
+      modal.classList.remove('show');
+    }
+  });
+</script>
+
+</body>
+</html>
